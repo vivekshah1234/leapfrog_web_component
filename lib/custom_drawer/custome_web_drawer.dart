@@ -565,39 +565,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         },
                       ),
                     ),
-                    ExpansionTile(
-                      tilePadding: const EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 10,
-                      ),
-                      leading: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 16,
-                        ),
-                        child: Icon(
-                          Icons.logout,
-                          color: widget.drawerIconColor,
-                          size: widget.drawerIconSize,
-                        ),
-                      ),
-                      title:
-                          _scaffoldKey.currentState?.isDrawerOpen ?? false
-                              ? Text("Logout", style: widget.drawerTextStyle)
-                              : const SizedBox.shrink(),
-                      backgroundColor: Colors.transparent,
-                      textColor: Colors.white,
-                      iconColor: Colors.white,
-                      trailing: const SizedBox.shrink(),
-                      children: [
-                        ListTile(
-                          onTap: () => widget.onLogOutClick(),
+                    ColoredBox(
+                      color: Colors.red,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          print("Logout clicked");
+                          widget.onLogOutClick();
+                        },
+                        child: ListTile(
+                          onTap: () {
+                            print("object");
+                            widget.onLogOutClick();
+                          },
                           title: const Text(
                             "Logout",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                     if (widget.version != null)
                       Align(

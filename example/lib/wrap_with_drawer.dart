@@ -20,7 +20,9 @@ class WrapWithDrawer extends StatelessWidget {
         menuItems: menuItems,
         onMenuTap: (route) => context.push(route),
         profileImageUrl: 'assets/user_place_holder.png',
-        onLogOutClick: () {},
+        onLogOutClick: () {
+          print("Log out clicked");
+        },
         isShowUserProfile: true,
         profileBackground: Colors.black,
         drawerIconSize: 26,
@@ -39,7 +41,6 @@ class WrapWithDrawer extends StatelessWidget {
         prefix: SizedBox(),
         isShowClearIcon: false,
         isShowUserName: true,
-        //headerWidget: SizedBox.shrink(),
         drawerHeader: Column(
           children: [
             CircleAvatar(
