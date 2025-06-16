@@ -565,24 +565,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         },
                       ),
                     ),
-                    ColoredBox(
-                      color: Colors.red,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          print("Logout clicked");
-                          widget.onLogOutClick();
-                        },
-                        child: ListTile(
-                          onTap: () {
-                            print("object");
-                            widget.onLogOutClick();
-                          },
-                          title: const Text(
-                            "Logout",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                    ListTile(
+                      onTap: () {
+                    
+                        widget.onLogOutClick();
+                      },
+                      title: const Text(
+                        "Logout",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     if (widget.version != null)
