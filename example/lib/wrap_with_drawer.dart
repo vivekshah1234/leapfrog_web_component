@@ -41,11 +41,6 @@ List<DrawerMenuItem> menuItems = [
 class WrapWithDrawer extends StatelessWidget {
   const WrapWithDrawer({super.key, required this.child, required this.pageTitle});
 
-  const WrapWithDrawer({
-    super.key,
-    required this.child,
-    required this.pageTitle,
-  });
   final Widget child;
   final String pageTitle;
 
@@ -84,11 +79,12 @@ class WrapWithDrawer extends StatelessWidget {
         // Main background color of the drawer.
         version: "1.0.0",
         // Application version displayed in the drawer.
-        titleStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        titleStyle: const TextStyle(color: Colors.red, fontSize: 30),
         // Text style for title.
-        userNameStyle: const TextStyle(color: Colors.white, fontSize: 16),
+        userNameStyle: const TextStyle(color: Colors.red, fontSize: 16),
         // Text style for user name.
-        drawerIconColor: Colors.white,
+        drawerIconColor: Colors.red,
+        drawerTextStyle: const TextStyle(color: Colors.pink, fontSize: 16),
         // Color of the drawer icons.
         userEmail: "jH9o7@example.com",
         // Email displayed under user's name.
@@ -99,6 +95,22 @@ class WrapWithDrawer extends StatelessWidget {
         isShowClearIcon: false,
         // Toggle visibility of clear icon (unused here).
         isShowUserName: true,
+
+        /// Collapsed Icon it will show when drawer is collapsed.,
+        //collapsedIcon: ,
+
+        /// Expanded Icon it will show when drawer is expanded.
+        //expandedIcon: ,
+
+        // Icon shown when the drawer is show the user collapse button.
+        /// drawerIcon: Icon(Icons.menu, color: Colors.white),
+
+        /// Drawer Text Style for menu items.
+        //drawerTextStyle: ,
+
+        /// User Last Name Text Style.
+        // userLatsNameStyle: ,
+
         // Show/hide user's name in the drawer.
         // Custom drawer header widget (replaces default) showing avatar, name, and email.
         drawerHeader: Column(

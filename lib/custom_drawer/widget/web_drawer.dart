@@ -24,8 +24,8 @@ class WebDrawer extends StatefulWidget {
     this.drawerIconColor = DrawerColors.drawerIconColor,
     this.drawerIconSize = 18,
     this.isSearchShow = false,
+    required this.drawerTextStyle,
     this.isShowClearIcon = false,
-    TextStyle? drawerTextStyle,
   }) : prefix = prefix ?? const SizedBox.shrink(),
        drawerIcon = drawerIcon ?? const Icon(Icons.menu),
 
@@ -49,6 +49,7 @@ class WebDrawer extends StatefulWidget {
   final String? lastName;
   final String? email;
   final bool isShowClearIcon;
+  final TextStyle drawerTextStyle;
 
   @override
   State<WebDrawer> createState() => _WebDrawerState();
@@ -69,13 +70,7 @@ class _WebDrawerState extends State<WebDrawer> {
     filerManuList.value.addAll(widget.menuItems.value);
   }
 
-  void changeMenu(
-    String? title,
-    String? childTitle,
-    DrawerMenuItem item,
-    Function(String route) onTap,
-    bool isExpanded,
-  ) {
+  void changeMenu(String? title, String? childTitle, DrawerMenuItem item, Function(String route) onTap, bool isExpanded) {
     for (var menu in mainMenuItem.value) {
       final isCurrent = menu.title == item.title;
       final isSelectedMenu = menu.title == title;
@@ -122,26 +117,11 @@ class _WebDrawerState extends State<WebDrawer> {
               .where((menu) {
                 String menuTitle = menu.title.toLowerCase();
                 final isMainMatch = menuTitle.startsWith(lowerQuery);
-                final matchingSubMenus =
-                    menu.subCategories
-                        ?.where(
-                          (subMenu) => subMenu.title.toLowerCase().startsWith(
-                            lowerQuery,
-                          ),
-                        )
-                        .toList();
-                return isMainMatch ||
-                    (matchingSubMenus != null && matchingSubMenus.isNotEmpty);
+                final matchingSubMenus = menu.subCategories?.where((subMenu) => subMenu.title.toLowerCase().startsWith(lowerQuery)).toList();
+                return isMainMatch || (matchingSubMenus != null && matchingSubMenus.isNotEmpty);
               })
               .map((menu) {
-                final matchingSubMenus =
-                    menu.subCategories
-                        ?.where(
-                          (subMenu) => subMenu.title.toLowerCase().startsWith(
-                            lowerQuery,
-                          ),
-                        )
-                        .toList();
+                final matchingSubMenus = menu.subCategories?.where((subMenu) => subMenu.title.toLowerCase().startsWith(lowerQuery)).toList();
                 return DrawerMenuItem(
                   title: menu.title,
                   route: menu.route,
@@ -157,12 +137,8 @@ class _WebDrawerState extends State<WebDrawer> {
   }
 
   String getUserInitials(String firstName, [String? lastName]) {
-    String firstInitial =
-        firstName.isNotEmpty ? firstName[0].toUpperCase() : '';
-    String lastInitial =
-        (lastName != null && lastName.isNotEmpty)
-            ? lastName[0].toUpperCase()
-            : '';
+    String firstInitial = firstName.isNotEmpty ? firstName[0].toUpperCase() : '';
+    String lastInitial = (lastName != null && lastName.isNotEmpty) ? lastName[0].toUpperCase() : '';
     return '$firstInitial$lastInitial';
   }
 
@@ -179,10 +155,7 @@ class _WebDrawerState extends State<WebDrawer> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
@@ -207,48 +180,32 @@ class _WebDrawerState extends State<WebDrawer> {
                           if (widget.isSearchShow) ...[
                             if (isMenuOpen.value) ...[
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
                                 child: Container(
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white10,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
+                                  decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(10)),
                                   height: 50, // Fixed height for the TextField
                                   child: TextField(
                                     controller: searchController,
                                     onChanged: (value) => searchMenu(value),
                                     decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                            vertical: 12,
-                                          ), // Vertical padding for text
+                                      contentPadding: const EdgeInsets.symmetric(vertical: 12), // Vertical padding for text
                                       hintText: 'Search',
                                       isDense: true,
                                       prefixIcon: widget.prefix,
                                       suffixIconColor: Colors.white,
-                                      hintStyle: const TextStyle(
-                                        color: Colors.white60,
-                                      ),
+                                      hintStyle: const TextStyle(color: Colors.white60),
                                       suffixIcon:
                                           widget.isShowClearIcon
                                               ? IconButton(
-                                                icon: Icon(
-                                                  Icons.clear,
-                                                  color: Colors.white,
-                                                ),
+                                                icon: Icon(Icons.clear, color: Colors.white),
                                                 onPressed: () {
                                                   searchController.clear();
                                                   searchMenu('');
                                                 },
                                               )
                                               : null,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide.none,
-                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
                                     ),
                                     style: const TextStyle(color: Colors.white),
                                   ),
@@ -263,9 +220,7 @@ class _WebDrawerState extends State<WebDrawer> {
                               children:
                                   (value.map((item) {
                                     return Theme(
-                                      data: Theme.of(context).copyWith(
-                                        dividerColor: Colors.transparent,
-                                      ),
+                                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                                       child: Container(
                                         margin: EdgeInsets.only(bottom: 10),
                                         child:
@@ -274,183 +229,85 @@ class _WebDrawerState extends State<WebDrawer> {
                                                   backgroundColor:
                                                       item.subCategories != null
                                                           ? Colors.transparent
-                                                          : (item.isSelected
-                                                              ? Colors.white12
-                                                              : Colors.white10),
-                                                  childrenPadding:
-                                                      const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                      ),
+                                                          : (item.isSelected ? Colors.white12 : Colors.white10),
+                                                  childrenPadding: const EdgeInsets.symmetric(horizontal: 10),
                                                   dense: false,
-                                                  tilePadding:
-                                                      const EdgeInsets.symmetric(
-                                                        vertical: 5,
-                                                        horizontal: 10,
-                                                      ),
-                                                  initiallyExpanded:
-                                                      item.isExpanded.value,
+                                                  tilePadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                  initiallyExpanded: item.isExpanded.value,
                                                   onExpansionChanged:
                                                       isMenuOpen.value
                                                           ? (expanded) {
-                                                            if (!isMenuOpen
-                                                                .value)
-                                                              return;
-                                                            changeMenu(
-                                                              item.title,
-                                                              null,
-                                                              item,
-                                                              (route) {
-                                                                if (item.subCategories ==
-                                                                    null) {
-                                                                  widget
-                                                                      .onMenuTap(
-                                                                        route,
-                                                                      );
-                                                                }
-                                                              },
-                                                              expanded,
-                                                            );
+                                                            if (!isMenuOpen.value) return;
+                                                            changeMenu(item.title, null, item, (route) {
+                                                              if (item.subCategories == null) {
+                                                                widget.onMenuTap(route);
+                                                              }
+                                                            }, expanded);
                                                           }
                                                           : null,
                                                   leading: Padding(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 16,
-                                                        ),
-                                                    child: Image.asset(
-                                                      item.iconUrl,
-                                                      color: Colors.white,
-                                                    ),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                                                    child: Image.asset(item.iconUrl, color: Colors.white),
                                                   ),
-                                                  title:
-                                                      isMenuOpen.value
-                                                          ? Text(
-                                                            item.title,
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          )
-                                                          : const SizedBox.shrink(),
+                                                  title: isMenuOpen.value ? Text(item.title, style: widget.drawerTextStyle) : const SizedBox.shrink(),
                                                   trailing:
                                                       isMenuOpen.value
                                                           ? Visibility(
-                                                            visible:
-                                                                (item.subCategories !=
-                                                                        null &&
-                                                                    item
-                                                                        .subCategories!
-                                                                        .isNotEmpty),
+                                                            visible: (item.subCategories != null && item.subCategories!.isNotEmpty),
                                                             child: Icon(
-                                                              item
-                                                                      .isExpanded
-                                                                      .value
-                                                                  ? Icons
-                                                                      .arrow_drop_up
-                                                                  : Icons
-                                                                      .arrow_drop_down,
-                                                              color:
-                                                                  Colors.white,
+                                                              item.isExpanded.value ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                                                              color: Colors.white,
                                                             ),
                                                           )
                                                           : const SizedBox.shrink(),
                                                   children:
                                                       isMenuOpen.value
-                                                          ? (item.subCategories !=
-                                                                  null)
-                                                              ? item.subCategories!.map((
-                                                                subItem,
-                                                              ) {
+                                                          ? (item.subCategories != null)
+                                                              ? item.subCategories!.map((subItem) {
                                                                 //log("Sub Menu ${subItem.toJson()}");
                                                                 return Visibility(
-                                                                  visible:
-                                                                      subItem
-                                                                          .isVisible,
+                                                                  visible: subItem.isVisible,
                                                                   child:
-                                                                      isMenuOpen
-                                                                              .value
+                                                                      isMenuOpen.value
                                                                           ? Theme(
-                                                                            data: Theme.of(
-                                                                              context,
-                                                                            ).copyWith(
-                                                                              dividerColor:
-                                                                                  Colors.transparent,
+                                                                            data: Theme.of(context).copyWith(
+                                                                              dividerColor: Colors.transparent,
                                                                               expansionTileTheme: ExpansionTileThemeData(
                                                                                 backgroundColor:
-                                                                                    subItem.isSelected
-                                                                                        ? Colors.white12
-                                                                                        : Colors.transparent,
+                                                                                    subItem.isSelected ? Colors.white12 : Colors.transparent,
                                                                                 shape: RoundedRectangleBorder(
-                                                                                  borderRadius: BorderRadius.circular(
-                                                                                    10,
-                                                                                  ),
+                                                                                  borderRadius: BorderRadius.circular(10),
                                                                                 ),
                                                                               ),
                                                                             ),
                                                                             child: ExpansionTile(
-                                                                              onExpansionChanged: (
-                                                                                value,
-                                                                              ) {
-                                                                                changeMenu(
-                                                                                  null,
-                                                                                  subItem.title,
-                                                                                  item,
-                                                                                  (
-                                                                                    route,
-                                                                                  ) {
-                                                                                    widget.onMenuTap(
-                                                                                      "${item.route}/$route",
-                                                                                    );
-                                                                                  },
-                                                                                  false,
-                                                                                );
+                                                                              onExpansionChanged: (value) {
+                                                                                changeMenu(null, subItem.title, item, (route) {
+                                                                                  widget.onMenuTap("${item.route}/$route");
+                                                                                }, false);
                                                                               },
-                                                                              tilePadding: const EdgeInsets.symmetric(
-                                                                                vertical:
-                                                                                    5,
-                                                                                horizontal:
-                                                                                    10,
-                                                                              ),
-                                                                              trailing:
-                                                                                  SizedBox.shrink(),
+                                                                              tilePadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                                              trailing: SizedBox.shrink(),
                                                                               leading: Padding(
-                                                                                padding: const EdgeInsets.symmetric(
-                                                                                  horizontal:
-                                                                                      30,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  subItem.iconUrl,
-                                                                                  color:
-                                                                                      Colors.white,
-                                                                                  height:
-                                                                                      18,
-                                                                                ),
+                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                child: Image.asset(subItem.iconUrl, color: Colors.white, height: 18),
                                                                               ),
                                                                               title:
                                                                                   isMenuOpen.value
                                                                                       ? Text(
                                                                                         subItem.title,
-                                                                                        style: TextStyle(
-                                                                                          color:
-                                                                                              Colors.white,
-                                                                                        ),
-                                                                                        maxLines:
-                                                                                            1,
-                                                                                        overflow:
-                                                                                            TextOverflow.ellipsis,
-                                                                                        softWrap:
-                                                                                            true,
+                                                                                        style: widget.drawerTextStyle,
+                                                                                        maxLines: 1,
+                                                                                        overflow: TextOverflow.ellipsis,
+                                                                                        softWrap: true,
                                                                                       )
                                                                                       : SizedBox.shrink(),
                                                                             ),
                                                                           )
                                                                           : Image.asset(
                                                                             subItem.iconUrl,
-                                                                            color:
-                                                                                Colors.white,
-                                                                            height:
-                                                                                widget.drawerIconSize,
+                                                                            color: Colors.white,
+                                                                            height: widget.drawerIconSize,
                                                                           ),
                                                                 );
                                                               }).toList()
@@ -459,27 +316,12 @@ class _WebDrawerState extends State<WebDrawer> {
                                                 )
                                                 : Container(
                                                   decoration: BoxDecoration(
-                                                    color:
-                                                        item.isSelected
-                                                            ? Colors.white12
-                                                            : Colors
-                                                                .transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          10,
-                                                        ),
+                                                    color: item.isSelected ? Colors.white12 : Colors.transparent,
+                                                    borderRadius: BorderRadius.circular(10),
                                                   ),
                                                   //margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                        vertical: 20,
-                                                      ),
-                                                  child: Image.asset(
-                                                    item.iconUrl,
-                                                    color: Colors.white,
-                                                    height:
-                                                        widget.drawerIconSize,
-                                                  ),
+                                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                                  child: Image.asset(item.iconUrl, color: Colors.white, height: widget.drawerIconSize),
                                                 ),
                                       ),
                                     );
@@ -493,29 +335,14 @@ class _WebDrawerState extends State<WebDrawer> {
                 ),
                 ExpansionTile(
                   onExpansionChanged: (value) => widget.onLogOutClick(),
-                  tilePadding: const EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 10,
-                  ),
+                  tilePadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   leading: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 16,
-                    ),
-                    child: Icon(
-                      Icons.logout,
-                      color: widget.drawerIconColor,
-                      size: widget.drawerIconSize,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    child: Icon(Icons.logout, color: widget.drawerIconColor, size: widget.drawerIconSize),
                   ),
                   title:
                       isMenuOpen.value
-                          ? Text(
-                            "Logout",
-                            style: TextStyle(
-                              color: widget.drawerTextSelectedColor,
-                            ),
-                          )
+                          ? Padding(padding: const EdgeInsets.only(top: 10), child: Text("Logout", style: widget.drawerTextStyle))
                           : const SizedBox.shrink(),
                   backgroundColor: Colors.transparent,
                   textColor: Colors.white,
@@ -530,10 +357,7 @@ class _WebDrawerState extends State<WebDrawer> {
                       child: Text(
                         "V ${widget.version ?? ""}",
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
+                        style: const TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
                   ),
