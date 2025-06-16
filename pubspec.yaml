@@ -1,6 +1,6 @@
 name: leapfrog_web_component
-description: "Web Componant for leapfrog"
-version: 0.0.1
+description: "This Web Component is a reusable, modular UI element crafted as part of a scalable frontend system for a website built at Leapfrog. Designed with performance, maintainability, and consistency in mind, it encapsulates both logic and styling to ensure a seamless user experience across the entire platform."
+version: 0.0.2
 homepage: https://github.com/vivekshah1234/leapfrog_web_component.git
 
 environment:
