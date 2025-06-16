@@ -47,7 +47,7 @@ class WrapWithDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(backgroundColor: Colors.black),
+      drawer: Drawer(backgroundColor: Colors.white),
       body: CustomDrawer(
         // This is a highly customizable drawer widget for navigation and user profile display.
         // It supports profile header, logout handling, theming, and dynamic menu rendering.
@@ -73,17 +73,18 @@ class WrapWithDrawer extends StatelessWidget {
         // Page title shown in the drawer's header.
         isSearchShow: true,
         // Toggle to show/hide the search bar inside the drawer.
-        headerColor: Colors.blue,
+        headerColor: Colors.black,
         // Color of the drawer header section.
         drawerColor: Colors.black,
         // Main background color of the drawer.
         version: "1.0.0",
         // Application version displayed in the drawer.
-        titleStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        titleStyle: const TextStyle(color: Colors.red, fontSize: 30),
         // Text style for title.
-        userNameStyle: const TextStyle(color: Colors.white, fontSize: 16),
+        userNameStyle: const TextStyle(color: Colors.red, fontSize: 16),
         // Text style for user name.
-        drawerIconColor: Colors.white,
+        drawerIconColor: Colors.red,
+        drawerTextStyle: const TextStyle(color: Colors.pink, fontSize: 16),
         // Color of the drawer icons.
         userEmail: "jH9o7@example.com",
         // Email displayed under user's name.
@@ -94,6 +95,22 @@ class WrapWithDrawer extends StatelessWidget {
         isShowClearIcon: false,
         // Toggle visibility of clear icon (unused here).
         isShowUserName: true,
+
+        /// Collapsed Icon it will show when drawer is collapsed.,
+        //collapsedIcon: ,
+
+        /// Expanded Icon it will show when drawer is expanded.
+        //expandedIcon: ,
+
+        // Icon shown when the drawer is show the user collapse button.
+        /// drawerIcon: Icon(Icons.menu, color: Colors.white),
+
+        /// Drawer Text Style for menu items.
+        //drawerTextStyle: ,
+
+        /// User Last Name Text Style.
+        // userLatsNameStyle: ,
+
         // Show/hide user's name in the drawer.
         // Custom drawer header widget (replaces default) showing avatar, name, and email.
         drawerHeader: Column(

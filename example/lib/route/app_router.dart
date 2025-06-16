@@ -14,9 +14,7 @@ import '../pages/procurement.dart';
 
 GoRouter router = GoRouter(
   initialLocation: RouteName.byuingstation,
-  // onException: (context, state, router) {
-  //   print("CURRENT PATH ${state.fullPath}");
-  // },
+  
   errorBuilder: (context, val) => Scaffold(body: Center(child: Text("404 ${val.error}"))),
   routes: [
     GoRoute(
