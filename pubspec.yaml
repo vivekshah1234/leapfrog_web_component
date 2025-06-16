@@ -1,7 +1,7 @@
 name: leapfrog_web_component
 description: "Web Componant for leapfrog"
 version: 0.0.1
-homepage:
+homepage: https://github.com/vivekshah1234/leapfrog_web_component.git
 
 environment:
   sdk: ^3.7.2
