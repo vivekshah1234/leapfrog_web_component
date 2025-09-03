@@ -1,51 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:leapfrog_web_component/custom_drawer/model/drawer_sub_menu.dart';
-
+import 'package:flutter/cupertino.dart';
 
 class DrawerMenuItem {
+  final int menuId;
+  final int? subMenuId;
   final String title;
   final String route;
   final bool isVisible;
   final String iconUrl;
-  bool isSelected;
-  ValueNotifier<bool> isExpanded = ValueNotifier(false);
-  List<DrawerSubMenuMenuItem>? subCategories;
+  ValueNotifier<bool> isSelected;
+  ValueNotifier<bool> isExpanded;
+  List<DrawerMenuItem>? subCategories;
 
   DrawerMenuItem({
     required this.title,
     required this.iconUrl,
     this.isVisible = true,
-    required this.isExpanded,
-    this.isSelected = false,
+    ValueNotifier<bool>? isSelected,
+    ValueNotifier<bool>? isExpanded,
     required this.route,
     this.subCategories,
-  });
+    required this.menuId,
+    this.subMenuId,
+  }) : isSelected = isSelected ?? ValueNotifier(false),
+       isExpanded = isExpanded ?? ValueNotifier(false);
 
-  DrawerMenuItem copyWith({
-    String? menuId,
-    String? title,
-    String? route,
-    bool? isVisible,
-    String? iconUrl,
-    bool isSelected = false,
-    ValueNotifier<bool>? isExpanded,
-    List<DrawerSubMenuMenuItem>? subCategories,
-  }) {
-    return DrawerMenuItem(
-      title: title ?? this.title,
-      route: route ?? this.route,
-      isVisible: isVisible ?? this.isVisible,
-      iconUrl: iconUrl ?? this.iconUrl,
-      isSelected: isSelected,
-      isExpanded: isExpanded ?? this.isExpanded,
-      subCategories: subCategories ?? this.subCategories,
-    );
-  }
-
-  toJson() => {
+  Map<String, dynamic> toJson() => {
     'title': title,
     'route': route,
-
+    'menuId': menuId,
+    'subMenuId': subMenuId,
     'isVisible': isVisible,
     'iconUrl': iconUrl,
     'isSelected': isSelected,
@@ -56,7 +39,8 @@ class DrawerMenuItem {
   fromJson(Map<String, dynamic> json) => DrawerMenuItem(
     title: json['title'],
     route: json['route'],
-
+    menuId: json['menuId'],
+    subMenuId: json['subMenuId'],
     isVisible: json['isVisible'],
     iconUrl: json['iconUrl'],
     isSelected: json['isSelected'],

@@ -49,9 +49,10 @@ class HeaderWithAnimation extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundImage: profileImage != null
-                    ? (profileImage!.contains("http") ? NetworkImage(profileImage!) : AssetImage(profileImage!)) as ImageProvider
-                    : null,
+                backgroundImage:
+                    profileImage != null
+                        ? (profileImage!.contains("http") ? NetworkImage(profileImage!) : AssetImage(profileImage!)) as ImageProvider
+                        : null,
                 radius: 30,
               ),
             ),
